@@ -1,8 +1,46 @@
+// Declare the variable which selects the SVG tag.
 let svg = d3.select("svg")
-d3.csv("/data/data.csv", function(data) {
-    console.log(data[0]);
+
+let xScale = d3.scaleLinear()
+.domain([0, 100])
+.range([0, 600]);
+
+let yScale = d3.scaleLinear()
+.domain([0, 100])
+.range([500, 0]);
+
+// Read in the CSV and 
+d3.csv("/data/data.csv", function(csv) {
+
+    csv.forEach(
+        function(d) {
+        d.percent_below_poverty_level = +d.percent_below_poverty_level;
+        d.percent_told_depressed = +d.percent_told_depressed;
+        });
+    
+    svg.selectAll("circle")
+        .data(csv)
+        .enter()
+        .append("circle")
+        .attr("class", ".point")
+        .attr("cx", csv.percent_below_poverty_level)
+        .attr("cy", csv.percent_told_depressed)
+        .attr("r", 5)
+        .style("fill", "blue") 
+        .style("width", function(d) { return xScale(d) + 'px'})
+
   });
+
+
+
+let scatterGenerator = d3.line()
+
+
+
 /* 
+csv.percent_below_poverty_level
+csv.percent_told_depressed
+
 svg.append("circle")
 .attr("class", ".point")
 .attr("cx", 200)
