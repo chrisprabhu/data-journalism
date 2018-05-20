@@ -18,22 +18,23 @@ d3.csv("/data/data.csv", function(csv) {
         d.percent_told_depressed = +d.percent_told_depressed;
         });
     
+
     svg.selectAll("circle")
         .data(csv)
         .enter()
         .append("circle")
         .attr("class", ".point")
-        .attr("cx", csv.percent_below_poverty_level)
-        .attr("cy", csv.percent_told_depressed)
-        .attr("r", 5)
+        .attr("cx", d => d.percent_below_poverty_level * 20)
+        .attr("cy", d => d.percent_told_depressed * 20)
+        .attr("r", 1)
         .style("fill", "blue") 
-        .style("width", function(d) { return xScale(d) + 'px'})
+       // .style("width", 500)// function(d) { return xScale(d) + 'px'})
+       // .style("height", 500) // function(d) { return yScale(d) + 'px'})
+    
+    svg.selectAll("")
 
-  });
+        });
 
-
-
-let scatterGenerator = d3.line()
 
 
 
