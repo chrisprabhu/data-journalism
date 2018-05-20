@@ -26,12 +26,26 @@ d3.csv("/data/data.csv", function(csv) {
         .attr("class", ".point")
         .attr("cx", d => d.percent_below_poverty_level * 20)
         .attr("cy", d => d.percent_told_depressed * 20)
-        .attr("r", 1)
-        .style("fill", "blue") 
+        .attr("r", 10)
+        .style("fill", "#F0F8FF")
+        .style("stroke", "black")
+        
+    
+    svg.selectAll("text")
+        .data(csv)
+        .enter()
+        .append("text")
+        .attr("x", d => d.percent_below_poverty_level * 20 -7)
+        .attr("y", d => d.percent_told_depressed * 20 + 4)
+        .attr("font-family", "sans-serif")
+        .attr("font-size", "10px")
+        .attr("fill", "black")
+        .text( d => d.state_abbr)
+        
        // .style("width", 500)// function(d) { return xScale(d) + 'px'})
        // .style("height", 500) // function(d) { return yScale(d) + 'px'})
     
-    svg.selectAll("")
+    
 
         });
 
