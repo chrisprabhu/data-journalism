@@ -63,7 +63,7 @@ d3.csv("/data/data.csv", function(csv) {
         .call(leftAxis)
     
     chartGroup.append("text")
-        .attr("class", "label")
+        .attr("class", "x label")
         .attr("x", -5)
         .attr("y", 535)
         .style("text-anchor", "end;")
@@ -71,7 +71,7 @@ d3.csv("/data/data.csv", function(csv) {
         .text("Percent Below Poverty Level");
 
         chartGroup.append("text")
-        .attr("class", "label")
+        .attr("class", "y label")
         .attr("x", -150)
         .attr("y", -30)
         .attr("transform", "rotate(-90)")
