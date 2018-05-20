@@ -9,6 +9,9 @@ let yScale = d3.scaleLinear()
 .domain([0, 100])
 .range([500, 0]);
 
+let chartGroup = svg.append('g')
+        .attr("transform", "translate(50, 50)");
+
 // Read in the CSV and 
 d3.csv("/data/data.csv", function(csv) {
 
@@ -19,40 +22,74 @@ d3.csv("/data/data.csv", function(csv) {
         });
     
 
-    svg.selectAll("circle")
+    chartGroup.append('g')
+        .attr("class", "points")
+        .selectAll("circle")
         .data(csv)
         .enter()
         .append("circle")
         .attr("class", ".point")
-        .attr("cx", d => d.percent_below_poverty_level * 20)
-        .attr("cy", d => d.percent_told_depressed * 20)
+        .attr("cx", d => xScale(d.percent_below_poverty_level))
+        .attr("cy", d => yScale(d.percent_told_depressed))
         .attr("r", 10)
         .style("fill", "#F0F8FF")
         .style("stroke", "black")
         
     
-    svg.selectAll("text")
+    chartGroup.append('g')
+        .attr("class", "labels")
+        .selectAll("text")
         .data(csv)
         .enter()
         .append("text")
-        .attr("x", d => d.percent_below_poverty_level * 20 -7)
-        .attr("y", d => d.percent_told_depressed * 20 + 4)
+        .attr("x", d => xScale(d.percent_below_poverty_level)-7)
+        .attr("y", d => yScale(d.percent_told_depressed)+4)
         .attr("font-family", "sans-serif")
         .attr("font-size", "10px")
         .attr("fill", "black")
         .text( d => d.state_abbr)
-        
-       // .style("width", 500)// function(d) { return xScale(d) + 'px'})
-       // .style("height", 500) // function(d) { return yScale(d) + 'px'})
-    
+
+    let bottomAxis = d3.axisBottom(xScale);
+    var leftAxis = d3.axisLeft(yScale);
     
 
-        });
+    chartGroup.append('g')
+        .classed("axis", true)
+        .attr("transform", "translate(0, 500)")
+        .call(bottomAxis)
+
+    chartGroup.append('g')
+        .classed('axis', true)
+        .call(leftAxis)
+    
+    chartGroup.append("text")
+        .attr("class", "label")
+        .attr("x", -5)
+        .attr("y", 535)
+        .style("text-anchor", "end;")
+        .style("font-weight", "bold")
+        .text("Percent Below Poverty Level");
+
+        chartGroup.append("text")
+        .attr("class", "label")
+        .attr("x", -150)
+        .attr("y", -30)
+        .attr("transform", "rotate(-90)")
+        .style("text-anchor", "end;")
+        .style("font-weight", "bold")
+        .text("Percent Told Depressed")
+        ;
+
+});
 
 
 
 
 /* 
+
+// .style("width", 500)// function(d) { return xScale(d) + 'px'})
+       // .style("height", 500) // function(d) { return yScale(d) + 'px'})
+    
 csv.percent_below_poverty_level
 csv.percent_told_depressed
 
